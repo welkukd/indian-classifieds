@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
 interface Profile {
@@ -33,8 +33,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
+  const configured = isSupabaseConfigured();
 
   useEffect(() => {
+    if (!configured || !supabase) {
+      setLoading(false);
+      return;
+    }
+
     const getInitialSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
@@ -59,9 +65,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [configured, supabase]);
 
   async function fetchProfile(userId: string) {
+    if (!configured || !supabase) return;
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
@@ -72,16 +79,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function signInWithPhone(phone: string) {
+    if (!configured || !supabase) return { error: "Supabase not configured" };
     const { error } = await supabase.auth.signInWithOtp({
       phone: `+91${phone.replace(/\s/g, "")}`,
-      options: {
-        channel: "sms",
-      },
+      options: { channel: "sms" },
     });
     return { error: error?.message ?? null };
   }
 
   async function verifyOTP(phone: string, token: string) {
+    if (!configured || !supabase) return { error: "Supabase not configured" };
     const { error } = await supabase.auth.verifyOtp({
       phone: `+91${phone.replace(/\s/g, "")}`,
       token,
@@ -91,31 +98,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function signInWithGoogle() {
+    if (!configured || !supabase) return { error: "Supabase not configured" };
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
     });
     return { error: error?.message ?? null };
   }
 
   async function signOut() {
+    if (!configured || !supabase) return;
     await supabase.auth.signOut();
     setUser(null);
     setProfile(null);
   }
 
   async function refreshProfile() {
-    if (user) {
-      await fetchProfile(user.id);
-    }
+    if (!configured || !supabase || !user) return;
+    await fetchProfile(user.id);
   }
 
   const value = {
     user,
     profile,
-    loading,
+    loading: configured ? loading : false,
     signInWithPhone,
     verifyOTP,
     signInWithGoogle,
@@ -128,6 +134,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  if (!context) {
+    return {
+      user: null,
+      profile: null,
+      loading: false,
+      signInWithPhone: async () => ({ error: "Auth not initialized" }),
+      verifyOTP: async () => ({ error: "Auth not initialized" }),
+      signInWithGoogle: async () => ({ error: "Auth not initialized" }),
+      signOut: async () => {},
+      refreshProfile: async () => {},
+    };
+  }
   return context;
 }

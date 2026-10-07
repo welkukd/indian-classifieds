@@ -1,12 +1,20 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
 
+  if (!isSupabaseConfigured()) {
+    return NextResponse.redirect(`${requestUrl.origin}/auth?error=${encodeURIComponent("Supabase not configured")}`);
+  }
+
+  const supabase = await createClient();
+  if (!supabase) {
+    return NextResponse.redirect(`${requestUrl.origin}/auth?error=${encodeURIComponent("Supabase unavailable")}`);
+  }
+
   if (code) {
-    const supabase = await createClient();
     const { data: { user }, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (error) {
@@ -14,7 +22,6 @@ export async function GET(request: NextRequest) {
     }
 
     if (user) {
-      // Create profile if it doesn't exist
       const { data: existingProfile } = await supabase
         .from("profiles")
         .select("id")

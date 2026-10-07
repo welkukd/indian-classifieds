@@ -1,315 +1,402 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { Search, MapPin, Shield, Clock, Star, Zap, Heart, MessageSquare } from "lucide-react";
+import { 
+  Search, MapPin, Shield, Zap, Star, CheckCircle, 
+  Smartphone, Car, Home, Briefcase, Wrench, Shirt, Sofa, BookOpen,
+  ChevronRight, ArrowRight, Users, MapPin as MapPinIcon, Clock, Sparkles
+} from "lucide-react";
 
 const categories = [
-  { name: "Electronics", icon: "📱", count: "12.4k", color: "bg-blue-500" },
-  { name: "Vehicles", icon: "🚗", count: "8.7k", color: "bg-green-500" },
-  { name: "Property", icon: "🏠", count: "15.2k", color: "bg-purple-500" },
-  { name: "Jobs", icon: "💼", count: "22.1k", color: "bg-orange-500" },
-  { name: "Services", icon: "🔧", count: "6.8k", color: "bg-pink-500" },
-  { name: "Fashion", icon: "👗", count: "9.3k", color: "bg-indigo-500" },
-  { name: "Home & Garden", icon: "🪑", count: "5.4k", color: "bg-teal-500" },
-  { name: "Books & Hobbies", icon: "📚", count: "3.2k", color: "bg-amber-500" },
+  { name: "Electronics", icon: Smartphone, count: "12.4k", href: "/category/electronics", color: "bg-blue-100 text-blue-600" },
+  { name: "Vehicles", icon: Car, count: "8.7k", href: "/category/vehicles", color: "bg-green-100 text-green-600" },
+  { name: "Property", icon: Home, count: "15.2k", href: "/category/property", color: "bg-purple-100 text-purple-600" },
+  { name: "Jobs", icon: Briefcase, count: "22.1k", href: "/category/jobs", color: "bg-orange-100 text-orange-600" },
+  { name: "Services", icon: Wrench, count: "6.8k", href: "/category/services", color: "bg-pink-100 text-pink-600" },
+  { name: "Fashion", icon: Shirt, count: "9.3k", href: "/category/fashion", color: "bg-indigo-100 text-indigo-600" },
+  { name: "Home & Garden", icon: Sofa, count: "5.4k", href: "/category/home-garden", color: "bg-teal-100 text-teal-600" },
+  { name: "Books & Hobbies", icon: BookOpen, count: "3.2k", href: "/category/books-hobbies", color: "bg-amber-100 text-amber-600" },
 ];
 
-const cities = [
-  "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata",
-  "Pune", "Ahmedabad", "Jaipur", "Lucknow", "Kanpur", "Nagpur",
-  "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara",
+const stats = [
+  { icon: Users, label: "Active Users", value: "50L+", description: "Trusted community" },
+  { icon: MapPinIcon, label: "Cities Covered", value: "500+", description: "Across India" },
+  { icon: Clock, label: "Avg Response", value: "12 min", description: "Lightning fast" },
+  { icon: Sparkles, label: "Daily Listings", value: "10k+", description: "Fresh every day" },
 ];
 
-const featuredAds = [
+const features = [
   {
-    id: 1,
-    title: "iPhone 15 Pro Max 256GB Natural Titanium",
-    price: "₹1,34,900",
-    location: "Bandra West, Mumbai",
-    time: "2 hours ago",
-    image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop",
-    category: "Electronics",
+    icon: Shield,
+    title: "100% Free Forever",
+    description: "Post unlimited ads without paying a rupee. No hidden fees, no subscription, no catch.",
   },
   {
-    id: 2,
-    title: "Honda City 2022 V CVT Petrol - Single Owner",
-    price: "₹11,50,000",
-    location: "Koramangala, Bangalore",
-    time: "4 hours ago",
-    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop",
-    category: "Vehicles",
+    icon: Zap,
+    title: "Instant WhatsApp Connect",
+    description: "Buyers message you directly on WhatsApp. No in-app chat delays, no missed leads.",
   },
   {
-    id: 3,
-    title: "2 BHK Flat for Rent - Fully Furnished",
-    price: "₹35,000/month",
-    location: "Hitech City, Hyderabad",
-    time: "1 hour ago",
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
-    category: "Property",
-  },
-  {
-    id: 4,
-    title: "Senior React Developer - Remote + Office",
-    price: "₹25-35 LPA",
-    location: "Whitefield, Bangalore",
-    time: "30 mins ago",
-    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop",
-    category: "Jobs",
+    icon: Star,
+    title: "Verified Sellers",
+    description: "KYC-verified profiles with ratings and reviews. Buy and sell with complete confidence.",
   },
 ];
 
-export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCity, setSelectedCity] = useState("Mumbai");
-  const [activeCategory, setActiveCategory] = useState(0);
+const howItWorks = [
+  {
+    step: "01",
+    title: "Post Your Ad Free",
+    description: "Select category, add photos, set price, and publish in under 60 seconds. No card, no fees.",
+    icon: Sparkles,
+  },
+  {
+    step: "02",
+    title: "Connect Instantly",
+    description: "Buyers contact you directly via WhatsApp or call. No middleman, no delays.",
+    icon: Zap,
+  },
+  {
+    step: "03",
+    title: "Close the Deal",
+    description: "Meet locally, inspect the item, and pay safely. Leave a review to build trust.",
+    icon: CheckCircle,
+  },
+];
 
+const trustIndicators = [
+  { icon: Shield, label: "Safe & Secure", desc: "Verified profiles" },
+  { icon: Zap, label: "Instant Chat", desc: "WhatsApp connect" },
+  { icon: Star, label: "Trusted Sellers", desc: "Ratings & reviews" },
+  { icon: MapPinIcon, label: "Local First", desc: "Neighborhood deals" },
+  { icon: Clock, label: "Quick Response", desc: "Avg 12 minutes" },
+  { icon: Sparkles, label: "Free Forever", desc: "No hidden fees" },
+];
+
+const popularSearches = [
+  "iPhone 15", "Honda City", "2 BHK Flat", "React Jobs", 
+  "MacBook Pro", "Royal Enfield", "PG Accommodation", 
+  "iPhone 14", "Activa 6G", "Office Space"
+];
+
+export default function DesiListHome() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Top Bar */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
+    <div className="min-h-screen bg-neutral-50">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
+        <div className="container">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            <Link href="/" className="flex items-center gap-2" aria-label="DesiList Home">
+              <div className="w-10 h-10 rounded-xl gradient-brand flex items-center justify-center">
                 <span className="text-white font-bold text-xl">⬣</span>
               </div>
-              <span className="text-2xl font-bold text-gray-900">DesiList</span>
+              <span className="text-2xl font-display font-bold text-neutral-900">DesiList</span>
             </Link>
 
-            <div className="flex-1 max-w-2xl mx-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search cars, phones, flats, jobs..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-2.5 bg-gray-100 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <select
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-xl text-gray-900 text-sm font-medium border-none focus:outline-none focus:ring-2 focus:ring-amber-500 appearance-none bg-no-repeat bg-right"
-                style={{ backgroundImage: "url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"%236b7280\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 9l6 6 6-6\"/></svg>')", backgroundPosition: "right 0.75rem center" }}
-              >
-                {cities.map((city) => (
-                  <option key={city} value={city}>{city}</option>
-                ))}
-              </select>
-              <Link
-                href="/post"
-                className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-amber-500 text-white font-semibold rounded-xl hover:bg-amber-600 transition-colors"
-              >
-                <span className="text-lg">+</span>
+            <div className="hidden lg:flex items-center gap-6">
+              <nav className="flex items-center gap-1">
+                <Link href="/listings" className="px-3 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-900 rounded-lg transition-colors">Browse</Link>
+                <Link href="/categories" className="px-3 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-900 rounded-lg transition-colors">Categories</Link>
+                <Link href="/safety" className="px-3 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-900 rounded-lg transition-colors">Safety</Link>
+                <Link href="/help" className="px-3 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-900 rounded-lg transition-colors">Help</Link>
+              </nav>
+              <div className="w-px h-6 bg-neutral-200 mx-2" />
+              <Link href="/auth" className="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors">Sign in</Link>
+              <Link href="/post" className="btn btn-primary px-5 py-2.5 text-sm">
+                <span className="text-xl mr-1">+</span>
                 Post Free Ad
               </Link>
             </div>
-          </div>
-        </div>
 
-        {/* Category Chips */}
-        <div className="px-4 py-3 border-t border-gray-100">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex gap-2 overflow-x-auto pb-2 -mb-2 scrollbar-hide">
-              {categories.map((cat, idx) => (
-                <button
-                  key={cat.name}
-                  onClick={() => setActiveCategory(idx)}
-                  className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    activeCategory === idx
-                      ? "bg-amber-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 border border-gray-200 hover:border-amber-300 hover:bg-amber-50"
-                  }`}
-                >
-                  <span className="text-lg">{cat.icon}</span>
-                  <span>{cat.name}</span>
-                  <span className={`px-2 py-0.5 rounded-full text-xs ${activeCategory === idx ? "bg-white/20" : "bg-gray-100 text-gray-600"}`}>
-                    {cat.count}
-                  </span>
-                </button>
-              ))}
+            <div className="lg:hidden flex items-center gap-2">
+              <Link href="/auth" className="p-2 rounded-lg text-neutral-600 hover:bg-neutral-100 transition-colors" aria-label="Sign in">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 018 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h18a7 7 0 00-7-7z"/></svg>
+              </Link>
+              <Link href="/post" className="btn btn-primary px-4 py-2 text-sm" aria-label="Post free ad">Post Ad</Link>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {[
-            { icon: "📦", label: "Active Listings", value: "2.4L+" },
-            { icon: "👥", label: "Happy Users", value: "50L+" },
-            { icon: "🏙️", label: "Cities Covered", value: "500+" },
-            { icon: "⚡", label: "Avg Response", value: "12 min" },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">{stat.icon}</span>
-                <div>
-                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                  <p className="text-sm text-gray-500">{stat.label}</p>
+      <main id="main-content">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden gradient-mesh py-20 lg:py-32">
+          <div className="container">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left Column - Hero Text */}
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur rounded-full border border-neutral-200 mb-8 animate-fade-in">
+                  <span className="w-2 h-2 bg-success-500 rounded-full animate-pulse-soft" aria-hidden="true"></span>
+                  <span className="text-sm font-medium text-neutral-700">Now in 500+ cities across India</span>
+                </div>
+
+                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-neutral-900 tracking-tight text-balance mb-6 animate-slide-up">
+                  India&apos;s <span className="text-gradient-brand">Free</span> Classifieds
+                </h1>
+
+                <p className="text-lg lg:text-xl text-neutral-600 max-w-xl mb-10 animate-slide-up delay-100">
+                  Buy, sell, rent, or hire locally. Post your ad in 60 seconds — completely free, forever.
+                  Join 50 lakh+ Indians who trust DesiList.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4 animate-slide-up delay-200">
+                  <Link href="/post">
+                    <button className="btn btn-primary w-full sm:w-auto text-lg px-10 py-4">
+                      Post Your Free Ad
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </button>
+                  </Link>
+                  <Link href="/listings">
+                    <button className="btn btn-outline w-full sm:w-auto text-lg px-10 py-4">
+                      Browse Listings
+                    </button>
+                  </Link>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-6 mt-10 text-sm text-neutral-500 animate-fade-in delay-300">
+                  <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-success-500" /> No credit card required</span>
+                  <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-success-500" /> 60-second setup</span>
+                  <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-success-500" /> Cancel anytime</span>
+                </div>
+              </div>
+
+              {/* Right Column - Hero Image */}
+              <div className="relative animate-slide-up delay-300">
+                <div className="relative z-10">
+                  <img src="/hero-image.svg" alt="DesiList \u2014 India&apos;s free classifieds" className="w-full h-auto rounded-2xl shadow-2xl" />
+                </div>
+                {/* Floating "Live" badge */}
+                <div className="absolute -top-4 -right-4 bg-brand-500 text-white rounded-2xl px-4 py-3 shadow-xl animate-float z-20">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-success-400 rounded-full animate-pulse"></div>
+                    <span className="font-medium text-sm">Live: 50L+ listings</span>
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Why DesiList */}
-        <section className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Why DesiList?</h2>
-            <Link href="/about" className="text-amber-600 font-medium hover:underline text-sm">Know more →</Link>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <Shield className="w-6 h-6" />,
-                title: "100% Free Forever",
-                desc: "Post unlimited ads without paying a rupee. No hidden fees, no subscription.",
-              },
-              {
-                icon: <Zap className="w-6 h-6" />,
-                title: "Instant WhatsApp Connect",
-                desc: "Buyers message you directly on WhatsApp. No in-app chat delays.",
-              },
-              {
-                icon: <Star className="w-6 h-6" />,
-                title: "Verified Sellers",
-                desc: "KYC-verified profiles with ratings. Buy and sell with confidence.",
-              },
-            ].map((feature, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all">
-                <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.desc}</p>
-              </div>
-            ))}
           </div>
         </section>
 
-        {/* Featured Listings */}
-        <section className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Just Listed Near You</h2>
-            <Link href="/listings" className="text-amber-600 font-medium hover:underline text-sm">View all →</Link>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredAds.map((ad) => (
-              <Link key={ad.id} href={`/listing/${ad.id}`} className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300">
-                <div className="relative aspect-video overflow-hidden">
-                  <img
-                    src={ad.image}
-                    alt={ad.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="bg-white/90 backdrop-blur px-2 py-1 rounded-full text-xs font-medium text-gray-700">{ad.category}</span>
+        {/* Stats Section */}
+        <section className="py-16 border-y border-neutral-200 bg-white">
+          <div className="container">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+              {stats.map((stat, i) => (
+                <div
+                  key={stat.label}
+                  className="bg-white/80 backdrop-blur rounded-2xl p-6 border border-neutral-200 hover:border-brand-300 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center mb-4">
+                    <stat.icon className="w-6 h-6" />
                   </div>
-                  <div className="absolute top-3 right-3">
-                    <button className="w-8 h-8 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-gray-600 hover:text-red-500 hover:bg-white transition-colors">
-                      <Heart className="w-4 h-4" />
-                    </button>
-                  </div>
+                  <p className="text-2xl lg:text-3xl font-bold text-neutral-900">{stat.value}</p>
+                  <p className="text-sm font-medium text-neutral-700 mt-1">{stat.label}</p>
+                  <p className="text-xs text-neutral-500 mt-0.5">{stat.description}</p>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-amber-600 transition-colors">{ad.title}</h3>
-                  <p className="text-xl font-bold text-amber-600 mb-2">{ad.price}</p>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <MapPin className="w-3.5 h-3.5" />
-                    <span className="truncate">{ad.location}</span>
-                    <span>•</span>
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{ad.time}</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+              ))}
+            </div>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl p-8 md:p-12 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Sell Faster?</h2>
-          <p className="text-lg md:text-xl text-amber-100 mb-8 max-w-2xl mx-auto">
-            Join 50 lakh+ Indians who trust DesiList. Post your first ad in 60 seconds — completely free.
-          </p>
-          <Link
-            href="/post"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-amber-600 font-bold text-lg rounded-xl hover:bg-amber-50 transition-colors shadow-lg"
-          >
-            Post Your Free Ad Now
-            <span className="text-2xl">→</span>
-          </Link>
         </section>
 
         {/* Trust Indicators */}
-        <section className="mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              { icon: MessageSquare, label: "Direct Chat", desc: "WhatsApp & Call" },
-              { icon: Shield, label: "Safe Deals", desc: "Verified Users" },
-              { icon: Clock, label: "Quick Response", desc: "Avg 12 minutes" },
-              { icon: Heart, label: "Save Favorites", desc: "Track listings" },
-            ].map((item, i) => (
-              <div key={i} className="p-6">
-                <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto mb-4 text-amber-600">
-                  <item.icon className="w-7 h-7" />
+        <section className="py-16 border-y border-neutral-200 bg-white">
+          <div className="container">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+              {trustIndicators.map((item, i) => (
+                <div key={i} className="flex flex-col items-center text-center p-4">
+                  <div className="w-12 h-12 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center mb-3">
+                    <item.icon className="w-6 h-6" />
+                  </div>
+                  <p className="font-semibold text-neutral-900">{item.label}</p>
+                  <p className="text-xs text-neutral-500 mt-0.5">{item.desc}</p>
                 </div>
-                <h3 className="font-semibold text-gray-900">{item.label}</h3>
-                <p className="text-sm text-gray-500 mt-1">{item.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Categories Section */}
+        <section className="py-20 lg:py-28">
+          <div className="container">
+            <div className="max-w-2xl mx-auto text-center mb-12">
+              <h2 className="page-title">Find What You're Looking For</h2>
+              <p className="page-subtitle">Browse popular categories or search for anything — from phones to flats, jobs to jewellery.</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+              {categories.map((cat) => (
+                <Link
+                  key={cat.name}
+                  href={cat.href}
+                  className="group card card-outlined p-6 hover:border-brand-300 hover:shadow-lg transition-all duration-300"
+                >
+                  <div className={`w-12 h-12 rounded-xl ${cat.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                    <cat.icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-semibold text-neutral-900 group-hover:text-brand-600 transition-colors">{cat.name}</h3>
+                  <p className="text-sm text-neutral-500 mt-1">{cat.count} listings</p>
+                  <div className="mt-4 flex items-center justify-between text-sm text-neutral-400 group-hover:text-brand-500 transition-colors">
+                    <span>Explore</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-10">
+              <Link href="/categories" className="btn btn-outline">
+                View All Categories
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="py-20 lg:py-28 bg-white border-y border-neutral-200">
+          <div className="container">
+            <div className="max-w-2xl mx-auto text-center mb-16">
+              <h2 className="page-title">How DesiList Works</h2>
+              <p className="page-subtitle">Three simple steps to buy or sell anything in your city.</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {howItWorks.map((item, i) => (
+                <div key={i} className="relative card card-outlined p-8 text-center">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full gradient-brand text-white flex items-center justify-center font-bold text-sm">
+                    {item.step}
+                  </div>
+                  <div className="w-14 h-14 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center mx-auto mb-6">
+                    <item.icon className="w-7 h-7" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-neutral-900 mb-2">{item.title}</h3>
+                  <p className="text-neutral-600">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section className="py-20 lg:py-28">
+          <div className="container">
+            <div className="max-w-2xl mx-auto text-center mb-16">
+              <h2 className="page-title">Why Choose DesiList?</h2>
+              <p className="page-subtitle">Built for how India buys and sells — local, fast, and completely free.</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {features.map((feature, i) => (
+                <div key={i} className="card card-outlined p-8 hover:border-brand-300 hover:shadow-xl transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center mb-5">
+                    <feature.icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-neutral-900 mb-3">{feature.title}</h3>
+                  <p className="text-neutral-600 leading-relaxed">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Banner */}
+        <section className="py-20 lg:py-28 relative overflow-hidden">
+          <div className="absolute inset-0 gradient-brand" />
+          <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
+          <div className="container relative">
+            <div className="max-w-3xl mx-auto text-center text-white">
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-6">Ready to Sell Faster?</h2>
+              <p className="text-lg lg:text-xl text-brand-100 mb-10 max-w-2xl mx-auto">
+                Join 50 lakh+ Indians who trust DesiList. Post your first ad in 60 seconds — completely free, forever.
+              </p>
+              <Link href="/post">
+                <button className="btn btn-secondary w-full sm:w-auto text-lg px-10 py-4">
+                  Post Your Free Ad Now
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Popular Searches */}
+        <section className="py-16 border-t border-neutral-200">
+          <div className="container">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-semibold text-neutral-900">Popular Searches</h2>
+              <Link href="/listings" className="text-sm font-medium text-brand-600 hover:text-brand-700 flex items-center gap-1">
+                View all <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {popularSearches.map((search, i) => (
+                <Link
+                  key={i}
+                  href={`/listings?q=${encodeURIComponent(search)}`}
+                  className="px-4 py-2 bg-white rounded-xl border border-neutral-200 text-neutral-700 hover:border-brand-300 hover:text-brand-600 hover:shadow-md transition-all text-sm font-medium"
+                >
+                  {search}
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+      <footer className="bg-neutral-900 text-neutral-400 py-16 lg:py-20">
+        <div className="container">
+          <div className="grid md:grid-cols-4 gap-10 mb-12">
+            {/* Brand */}
             <div>
-              <Link href="/" className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
+              <Link href="/" className="flex items-center gap-2 mb-6">
+                <div className="w-10 h-10 rounded-xl gradient-brand flex items-center justify-center">
                   <span className="text-white font-bold text-xl">⬣</span>
                 </div>
-                <span className="text-2xl font-bold text-white">DesiList</span>
+                <span className="text-2xl font-display font-bold text-white">DesiList</span>
               </Link>
-              <p className="text-sm">India's fastest growing free classifieds. Buy, sell, rent, hire — locally.</p>
+              <p className="text-sm text-neutral-500 max-w-xs">India&apos;s fastest growing free classifieds. Buy, sell, rent, hire \u2014 locally, safely, instantly.</p>
             </div>
-            <div>
-              <h4 className="text-white font-semibold mb-4">Categories</h4>
-              <ul className="space-y-2 text-sm">
-                {categories.slice(0, 4).map((cat) => (
-                  <li key={cat.name}><Link href={`/category/${cat.name.toLowerCase()}`} className="hover:text-amber-400 transition-colors">{cat.name}</Link></li>
+
+            {/* Browse */}
+            <nav>
+              <h4 className="text-white font-semibold mb-4">Browse</h4>
+              <ul className="space-y-3 text-sm">
+                {categories.map((cat) => (
+                  <li key={cat.name}><Link href={cat.href} className="hover:text-brand-400 transition-colors">{cat.name}</Link></li>
                 ))}
               </ul>
-            </div>
-            <div>
+            </nav>
+
+            {/* Support */}
+            <nav>
               <h4 className="text-white font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/help" className="hover:text-amber-400 transition-colors">Help Center</Link></li>
-                <li><Link href="/safety" className="hover:text-amber-400 transition-colors">Safety Tips</Link></li>
-                <li><Link href="/contact" className="hover:text-amber-400 transition-colors">Contact Us</Link></li>
+              <ul className="space-y-3 text-sm">
+                <li><Link href="/help" className="hover:text-brand-400 transition-colors">Help Center</Link></li>
+                <li><Link href="/safety" className="hover:text-brand-400 transition-colors">Safety Tips</Link></li>
+                <li><Link href="/contact" className="hover:text-brand-400 transition-colors">Contact Us</Link></li>
+                <li><Link href="/faq" className="hover:text-brand-400 transition-colors">FAQ</Link></li>
               </ul>
-            </div>
-            <div>
+            </nav>
+
+            {/* Legal */}
+            <nav>
               <h4 className="text-white font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/terms" className="hover:text-amber-400 transition-colors">Terms of Service</Link></li>
-                <li><Link href="/privacy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link></li>
+              <ul className="space-y-3 text-sm">
+                <li><Link href="/terms" className="hover:text-brand-400 transition-colors">Terms of Service</Link></li>
+                <li><Link href="/privacy" className="hover:text-brand-400 transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/guidelines" className="hover:text-brand-400 transition-colors">Community Guidelines</Link></li>
               </ul>
-            </div>
+            </nav>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-sm">
-            <p>© 2025 DesiList. Made with ❤️ for India. Not affiliated with OLX, Quikr, or Karrot.</p>
+
+          <div className="border-t border-neutral-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm">© 2025 DesiList. Made with care for India.</p>
+            <div className="flex items-center gap-6">
+              <a href="#" className="hover:text-brand-400 transition-colors" aria-label="Twitter">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+              </a>
+              <a href="#" className="hover:text-brand-400 transition-colors" aria-label="LinkedIn">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg>
+              </a>
+              <a href="#" className="hover:text-brand-400 transition-colors" aria-label="Instagram">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       </footer>

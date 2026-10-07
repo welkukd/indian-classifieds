@@ -1,0 +1,27 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#08090a"/>
+  <rect x="80" y="80" width="1040" height="470" rx="32" fill="#141517" stroke="#fbbf24" stroke-width="2"/>
+  <rect x="140" y="140" width="200" height="160" rx="16" fill="#1e2023"/>
+  <circle cx="240" cy="220" r="40" fill="#fbbf24"/>
+  <path d="M240 190 C262 190 278 206 278 228 C278 250 262 266 240 266 C218 266 202 250 202 228 C202 206 218 190 240 190 Z" fill="#08090a"/>
+  <path d="M240 198 L248 206 L262 192" stroke="#fbbf24" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <rect x="400" y="140" width="280" height="100" rx="12" fill="#1e2023"/>
+  <rect x="400" y="260" width="280" height="100" rx="12" fill="#1e2023"/>
+  <rect x="720" y="140" width="280" height="100" rx="12" fill="#1e2023"/>
+  <rect x="720" y="260" width="280" height="100" rx="12" fill="#1e2023"/>
+  
+  <rect x="140" y="340" width="860" height="210" rx="16" fill="#1e2023"/>
+  <rect x="180" y="380" width="80" height="20" rx="10" fill="#3a3d42"/>
+  <rect x="180" y="415" width="600" height="12" rx="6" fill="#3a3d42"/>
+  <rect x="180" y="435" width="600" height="12" rx="6" fill="#3a3d42"/>
+  <rect x="180" y="455" width="400" height="12" rx="6" fill="#3a3d42"/>
+  
+  <g transform="translate(1040, 40)">
+    <rect x="0" y="0" width="80" height="80" rx="12" fill="#1e2023"/>
+    <circle cx="40" cy="25" r="15" fill="#fbbf24"/>
+  </g>
+  
+  <rect x="480" y="580" width="240" height="50" rx="25" fill="#fbbf24"/>
+  <text x="600" y="615" text-anchor="middle" fill="#08090a" font-family="Arial, sans-serif" font-size="20" font-weight="700">DesiList</text>
+</svg>
