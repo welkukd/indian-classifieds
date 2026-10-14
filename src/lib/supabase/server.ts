@@ -5,7 +5,7 @@ const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 const isPlaceholder = (v: string | undefined) =>
-  !v || v.includes("your-project") || v.includes("eyJhbG...here");
+  !v || v.includes("your-project") || v.includes("eyJhbG...here") || v.includes("placeholder");
 
 export const createClient = async () => {
   if (isPlaceholder(url) || isPlaceholder(key)) return null;
