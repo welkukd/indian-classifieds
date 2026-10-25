@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
@@ -31,13 +31,24 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Initialize loading to false if not configured, true otherwise
   const supabase = createClient();
   const configured = isSupabaseConfigured();
+  const [loading, setLoading] = useState(configured && !!supabase);
+
+  const fetchProfile = useCallback(async (userId: string) => {
+    if (!configured || !supabase) return;
+    const { data } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (data) setProfile(data as Profile);
+  }, [configured, supabase]);
 
   useEffect(() => {
     if (!configured || !supabase) {
-      setLoading(false);
       return;
     }
 
@@ -65,18 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
 
     return () => subscription.unsubscribe();
-  }, [configured, supabase]);
-
-  async function fetchProfile(userId: string) {
-    if (!configured || !supabase) return;
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
-      .single();
-
-    if (data) setProfile(data as Profile);
-  }
+  }, [configured, supabase, fetchProfile]);
 
   async function signInWithPhone(phone: string) {
     if (!configured || !supabase) return { error: "Supabase not configured" };

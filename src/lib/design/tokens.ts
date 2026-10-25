@@ -123,21 +123,21 @@ export const tokens = {
   // Typography
   typography: {
     fontFamily: {
-      sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-      display: ['Playfair Display', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
-      mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+      sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'] as const,
+      display: ['Playfair Display', 'Georgia', 'Cambria', 'Times New Roman', 'serif'] as const,
+      mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'] as const,
     },
     fontSize: {
-      xs: ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.025em' }],      // 12px
-      sm: ['0.875rem', { lineHeight: '1.5', letterSpacing: '0.01em' }],     // 14px
-      base: ['1rem', { lineHeight: '1.5', letterSpacing: '0' }],            // 16px
-      lg: ['1.125rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],    // 18px
-      xl: ['1.25rem', { lineHeight: '1.4', letterSpacing: '-0.015em' }],    // 20px
-      '2xl': ['1.5rem', { lineHeight: '1.3', letterSpacing: '-0.02em' }],   // 24px
-      '3xl': ['1.875rem', { lineHeight: '1.25', letterSpacing: '-0.02em' }], // 30px
-      '4xl': ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.025em' }],  // 36px
-      '5xl': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.03em' }],     // 48px
-      '6xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.03em' }],   // 60px
+      xs: ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.025em' } as const] as const,      // 12px
+      sm: ['0.875rem', { lineHeight: '1.5', letterSpacing: '0.01em' } as const] as const,     // 14px
+      base: ['1rem', { lineHeight: '1.5', letterSpacing: '0' } as const] as const,            // 16px
+      lg: ['1.125rem', { lineHeight: '1.5', letterSpacing: '-0.01em' } as const] as const,    // 18px
+      xl: ['1.25rem', { lineHeight: '1.4', letterSpacing: '-0.015em' } as const] as const,    // 20px
+      '2xl': ['1.5rem', { lineHeight: '1.3', letterSpacing: '-0.02em' } as const] as const,   // 24px
+      '3xl': ['1.875rem', { lineHeight: '1.25', letterSpacing: '-0.02em' } as const] as const, // 30px
+      '4xl': ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.025em' } as const] as const,  // 36px
+      '5xl': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.03em' } as const] as const,     // 48px
+      '6xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.03em' } as const] as const,   // 60px
     },
     fontWeight: {
       normal: '400',
@@ -230,11 +230,11 @@ export type Tokens = typeof tokens;
 export function generateCSSVariables(tokens: Tokens): string {
   const lines: string[] = [':root {'];
 
-  function flatten(obj: Record<string, any>, prefix: string = '') {
+  function flatten(obj: Record<string, unknown>, prefix: string = '') {
     for (const [key, value] of Object.entries(obj)) {
       const newKey = prefix ? `${prefix}-${key}` : key;
-      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-        flatten(value, newKey);
+      if (value && typeof value === 'object' && !Array.isArray(value)) {
+        flatten(value as Record<string, unknown>, newKey);
       } else if (Array.isArray(value)) {
         // Handle typography tuples
         lines.push(`  --${newKey}: ${value[0]};`);

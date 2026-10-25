@@ -73,7 +73,7 @@ export function generateAvatarColor(name: string): string {
   return colors[Math.abs(hash) % colors.length];
 }
 
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   fn: T,
   ms: number
 ): (...args: Parameters<T>) => void {

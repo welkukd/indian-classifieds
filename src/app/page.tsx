@@ -129,7 +129,7 @@ export default function DesiListHome() {
                 </div>
 
                 <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-neutral-900 tracking-tight text-balance mb-6 animate-slide-up">
-                  India&apos;s <span className="text-gradient-brand">Free</span> Classifieds
+                  India&rsquo;s <span className="text-gradient-brand">Free</span> Classifieds
                 </h1>
 
                 <p className="text-lg lg:text-xl text-neutral-600 max-w-xl mb-10 animate-slide-up delay-100">
@@ -161,7 +161,7 @@ export default function DesiListHome() {
               {/* Right Column - Hero Image */}
               <div className="relative animate-slide-up delay-300">
                 <div className="relative z-10">
-                  <img src="/hero-image.svg" alt="DesiList \u2014 India&apos;s free classifieds" className="w-full h-auto rounded-2xl shadow-2xl" />
+                  <img src="/hero-image.svg" alt="DesiList — India&rsquo;s free classifieds" className="w-full h-auto rounded-2xl shadow-2xl" />
                 </div>
                 {/* Floating "Live" badge */}
                 <div className="absolute -top-4 -right-4 bg-brand-500 text-white rounded-2xl px-4 py-3 shadow-xl animate-float z-20">
@@ -349,7 +349,7 @@ export default function DesiListHome() {
                 </div>
                 <span className="text-2xl font-display font-bold text-white">DesiList</span>
               </Link>
-              <p className="text-sm text-neutral-500 max-w-xs">India&apos;s fastest growing free classifieds. Buy, sell, rent, hire \u2014 locally, safely, instantly.</p>
+              <p className="text-sm text-neutral-500 max-w-xs">India&rsquo;s fastest growing free classifieds. Buy, sell, rent, hire \u2014 locally, safely, instantly.</p>
             </div>
 
             {/* Browse */}
