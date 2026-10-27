@@ -76,3 +76,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # All API routes functional with mock data fallback
 # Cron endpoint returns 401 (expected without CRON_SECRET)
 # GitHub repo synced (origin/main up to date)
+#
+# VERIFIED 2026-10-27:
+# - Health endpoint: https://indian-classifieds.vercel.app/api/health returns {"status":"healthy","database":"not_configured"}
+# - Categories API: 8 categories with mock data (Electronics, Vehicles, Property, Jobs, Services, Fashion, Home & Garden, Books & Hobbies)
+# - Listings API: 6 sample listings with images, mock data working
+# - Cities API: Major Indian cities with mock data
+# - Cron endpoint: /api/cron/cleanup-expired returns 401 (correct — requires CRON_SECRET)
+# - Build: local typecheck/lint/build all PASS
+# - EXTERNAL BLOCKER UNCHANGED: Supabase project not yet provisioned
